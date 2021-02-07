@@ -4,6 +4,8 @@ const gridContainer = document.querySelector(".grid-container");
 const overlay = document.querySelector(".overlay");
 const modalContainer = document.querySelector(".modal-content");
 const modalClose = document.querySelector(".modal-close");
+const modalNext = document.querySelector(".modal-next");
+const modalPrevious = document.querySelector(".modal-previous");
 
 function displayEmployees(employeeData) {
     employees = employeeData;
@@ -32,7 +34,7 @@ function displayModal(index) {
     let date = new Date(dob.date);
     const modalHTML = `
         <img class="avatar" src="${picture.large}">
-        <div class="text-container">
+        <div class="text-container" id="modal-container" data-index="${index}">
             <h2 class="name">${name.first} ${name.last}</h2>
             <p class="email">${email}</p>
             <p class="address">${city}</p>
@@ -59,9 +61,27 @@ modalClose.addEventListener('click', e => {
     overlay.classList.add('hidden');
 });
 
-// modalNext.addEventListener('click', e => {
-//     let currentIndex = 
-// });
+modalNext.addEventListener('click', e => {
+    let overlayContainer = document.getElementById('modal-container');
+    let overlayIndex = overlayContainer.getAttribute('data-index');
+    let newIndex = parseInt(overlayIndex) + 1
+    if ( newIndex === 12) {
+        displayModal(0);
+    } else {
+        displayModal(newIndex);
+    }
+});
+
+modalPrevious.addEventListener('click', e => {
+    let overlayContainer = document.getElementById('modal-container');
+    let overlayIndex = overlayContainer.getAttribute('data-index');
+    let newIndex = parseInt(overlayIndex) - 1
+    if ( newIndex < 0) {
+        displayModal(11);
+    } else {
+        displayModal(newIndex);
+    }
+});
 
 fetch(urlAPI)
     .then(res => res.json())
