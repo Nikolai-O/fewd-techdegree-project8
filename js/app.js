@@ -88,3 +88,16 @@ fetch(urlAPI)
     .then(res => res.results)
     .then(displayEmployees)
     .catch(err => console.log(err));
+
+function searchEmployees() {
+    let input = document.getElementById('search').value.toLowerCase();
+    let employeeNames = document.querySelectorAll('.name');
+
+    employeeNames.forEach(employeeName => {
+        if ( !employeeName.innerText.toLowerCase().includes(input) ) {
+            employeeName.parentElement.parentElement.style.display = "none";
+        } else {
+            employeeName.parentElement.parentElement.style.display = "flex";
+        }
+    });
+};
